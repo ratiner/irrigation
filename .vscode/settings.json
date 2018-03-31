@@ -1,0 +1,11 @@
+{
+    "terminal.integrated.env.linux": {
+        "PATH": "/home/roman/.platformio/penv/bin:/home/roman/.platformio/penv:/home/roman/bin:/home/roman/.local/bin:/home/roman/bin:/home/roman/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games",
+        "PLATFORMIO_CALLER": "vscode"
+    },
+    "files.associations": {
+        "array": "cpp",
+        "initializer_list": "cpp",
+        "typeinfo": "cpp"
+    }
+}
