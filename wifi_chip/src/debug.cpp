@@ -7,8 +7,8 @@ void Debug::begin(void)
 
 void Debug::print (String & text) 
 {
-    //Serial.print(text);
-    Serial.print(text);
+    Serial1.print(text);
+   
 }
 
 void Debug::println (String & text) 

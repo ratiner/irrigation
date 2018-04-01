@@ -1,8 +1,8 @@
 #include <Arduino.h>
-#include "net.hpp"
-#include "webManager.hpp"
 #include "com.hpp"
-#include "debug.hpp"
+
+
+Com * _com;
 
 void setup();
 void loop();

@@ -42,10 +42,10 @@ bool WebManager::tryHandleClient(void)
   {
      //handle api request
      if(path.indexOf("1/on") > 0) {
-       digitalWrite(5, HIGH);
+       Com::set(1, 1, "1");
      }
      if(path.indexOf("1/off") > 0) {
-       digitalWrite(5, LOW);
+       Com::set(1, 1, "0");
      }
   }
   else 

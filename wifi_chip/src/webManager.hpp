@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
+#include "com.hpp"
 #include "debug.hpp"
 
 class WebManager {
