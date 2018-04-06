@@ -11,8 +11,8 @@ void setup()
   Net network;
   network.create_access_point();
   _webManager.start();
-  pinMode(16, OUTPUT);
-  pinMode(5, OUTPUT);
+ // pinMode(16, OUTPUT);
+ // pinMode(5, OUTPUT);
 
  
 }

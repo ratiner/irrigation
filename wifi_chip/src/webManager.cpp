@@ -20,6 +20,8 @@ bool WebManager::start(void)
 bool WebManager::tryHandleClient(void) 
 {
   WiFiClient c = _server->available();   // Listen for incoming clients
+ // c.setNoDelay(1);
+
   if (!c)
     return false; //if no client
   _client = &c;
@@ -126,7 +128,7 @@ void WebManager::doStaticContent(String path)
     _client->println();
 
     while (fl.available())
-      _client->write(fl.read());
+      _client->write(fl);
     fl.close();
   }
   else  {
