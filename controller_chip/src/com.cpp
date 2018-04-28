@@ -3,7 +3,7 @@
 
 void Com::begin(void)
 {
-    Serial.begin(9600);
+   // Serial.begin(9600);
     _buffer = "";
 }
 
@@ -39,9 +39,9 @@ void Com::listen(void)
         _buffer = _buffer.substring(idxEnd+_end.length());
 
         
-        Serial.println("CMD:" + cmd);
-        Serial.println("key:" + key);
-        Serial.println("value:" + value);
+       // Serial.println("CMD:" + cmd);
+       // Serial.println("key:" + key);
+        //Serial.println("value:" + value);
         if(cmd == "1")
         {
             digitalWrite(4, value.toInt());

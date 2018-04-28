@@ -1,17 +1,27 @@
 #ifndef COM_H
 #define COM_H
 
-#include <cstdio>
 #include <Arduino.h>
+#include "communication/ComMessage.hpp"
+#include "debug.hpp";
 
 class Com {
-    static const char * const  _start;
-    static const char * const _split;
-    static const char * const _end;
+    const int _timeout = 2000; //ms
+    const String  _start = ":::";
+    const String _split = ",,,";
+    const String _end = ";;;";
+    String _buffer;
+
+    void (*_receivedCallback)(int cmd, int key, const char * value);
+
     public:
-        static void begin (void);
-        static void set (int cmd, int key, const char * value);
-        static void get (int cmd, int key);
+        void begin (void);
+        void listen(void);
+        ComMessage * send (int cmd, int key, const char * value);
+        void setReceiver(void (*callback)(int cmd, int key, const char * value));
+    private:
+        ComMessage * receive ();
+        void transmit(int cmd, int key, const char * value);
        
 };
 #endif

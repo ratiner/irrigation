@@ -1,30 +1,24 @@
 #include "main.hpp"
 
-WebManager _webManager;
+#include "communication/ComMessage.hpp"
+
 String header;
+WebManager _webManager;
+Com com;
 
 void setup()
 {
-  Com::begin();
   Debug::begin();
-  
   Net network;
-  network.create_access_point();
+ // network.create_access_point();
+ network.connect();
   _webManager.start();
- // pinMode(16, OUTPUT);
- // pinMode(5, OUTPUT);
-
- 
+  com.begin();
 }
 
 
 void loop()
 {
   _webManager.tryHandleClient();
-
-      
-    
-
-    //Serial.printf("Stations connected = %d\n", WiFi.softAPgetStationNum());
-    //
+  com.listen();
 }

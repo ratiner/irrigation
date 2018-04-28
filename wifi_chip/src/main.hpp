@@ -6,3 +6,4 @@
 
 void setup();
 void loop();
+void requestReceived(int cmd, int key, const char * value);

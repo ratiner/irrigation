@@ -2,6 +2,7 @@
 #include "external.hpp"
 
 External * _external;
+Com * _com;
 WebManager::WebManager()
 {
 }
@@ -11,6 +12,9 @@ bool WebManager::start(void)
   _external = new External();
   _external->init();
   
+  _com = new Com();
+  _com->begin();
+
   _server = new WiFiServer(80);
   _server->begin();
   
@@ -22,13 +26,12 @@ bool WebManager::tryHandleClient(void)
   WiFiClient c = _server->available();   // Listen for incoming clients
  // c.setNoDelay(1);
 
-  if (!c)
+  if (!c || !c.connected())
     return false; //if no client
   _client = &c;
 
   Debug::println("New Client.");          // print a message out in the serial port
   this->getRequest();
-
   String method = _req.substring(0, _req.indexOf(" "));
   String path = _req.substring(_req.indexOf(" ")+2, _req.indexOf("HTTP/1."));
   path.trim();
@@ -44,10 +47,10 @@ bool WebManager::tryHandleClient(void)
   {
      //handle api request
      if(path.indexOf("1/on") > 0) {
-       Com::set(1, 1, "1");
+       _com->send(1, 1, "1");
      }
      if(path.indexOf("1/off") > 0) {
-       Com::set(1, 1, "0");
+       _com->send(1, 1, "0");
      }
   }
   else 
@@ -89,7 +92,7 @@ void WebManager::getRequest()
       else if (c != '\r')               // if you got anything else but a carriage return character,
         currentLine += c;               // add it to the end of the currentLine
     }
-  }
+  } 
 }
 
 void WebManager::doStaticContent(String path) 
@@ -109,6 +112,7 @@ void WebManager::doStaticContent(String path)
   Debug::print(" - ");
   Debug::println(contentType);
 
+
   if(!_external->exists(path.c_str()))
   {
       this->doError(404, "File not found");
@@ -127,6 +131,7 @@ void WebManager::doStaticContent(String path)
     _client->println("Connection: close");
     _client->println();
 
+    
     while (fl.available())
       _client->write(fl);
     fl.close();

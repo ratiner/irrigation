@@ -25,4 +25,12 @@ bool Net::create_access_point(void)
 
 bool Net::connect(void)
 {
+  _localIp = WiFi.begin("Ratiner Network", "690DA7F5AD");
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Debug::print(".");
+  }
+  Debug::print("Connected, IP address: ");
+  Debug::println(WiFi.localIP().toString().c_str());
 }
