@@ -1,7 +1,5 @@
 #include "main.hpp"
 
-#include "communication/ComMessage.hpp"
-
 String header;
 WebManager _webManager;
 Com com;
