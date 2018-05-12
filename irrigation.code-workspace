@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "common"
+		},
+		{
+			"path": "controller_chip"
+		},
+		{
+			"path": "html"
+		},
+		{
+			"path": "wifi_chip"
+		}
+	]
+}
