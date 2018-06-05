@@ -14,7 +14,7 @@ class WebManager {
     Com * _com;
 
     public:
-    WebManager();
+    WebManager(External * external);
     bool start (void);
     bool tryHandleClient(void);
     private:

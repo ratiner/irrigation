@@ -2,15 +2,14 @@
 
 
 
-WebManager::WebManager()
+WebManager::WebManager(External * external)
 {
+  _external = external;
 }
 
 bool WebManager::start(void)
 {
-  _external = new External();
-  _external->init();
-  
+ 
   _com = new Com();
   _com->begin();
 
@@ -46,7 +45,49 @@ bool WebManager::tryHandleClient(void)
   {
      //handle api request
      if(path.indexOf("1/on") > 0) {
-       _com->send(1, 1, "1");
+
+
+
+
+
+
+
+int n = WiFi.scanNetworks();
+  Debug::println("scan done");
+  if (n == 0) {
+    Debug::println("no networks found");
+  } else {
+    Serial1.print(n);
+    Debug::println(" networks found");
+    for (int i = 0; i < n; ++i) {
+      // Print SSID and RSSI for each network found
+      Serial1.print(i + 1);
+      Debug::print(": ");
+      Serial1.print(WiFi.SSID(i));
+      Serial1.print(" (");
+      Serial1.print(WiFi.RSSI(i));
+      Debug::print(")");
+      Serial1.println((WiFi.encryptionType(i) == ENC_TYPE_NONE) ? " " : "*");
+      delay(10);
+    }
+  }
+  Serial.println("");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       //_com->send(1, 1, "1");
      }
      if(path.indexOf("1/off") > 0) {
        _com->send(1, 1, "0");

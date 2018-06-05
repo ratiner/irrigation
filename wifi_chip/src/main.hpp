@@ -3,6 +3,7 @@
 #include "webManager.hpp"
 #include "com.hpp"
 #include "debug.hpp"
+#include "external.hpp"
 
 void setup();
 void loop();

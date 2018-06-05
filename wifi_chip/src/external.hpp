@@ -1,3 +1,6 @@
+#ifndef EXTERNAL_H
+#define EXTERNAL_H
+
 #include <cstdio>
 #include <Arduino.h>
 #include <SPI.h>
@@ -12,3 +15,4 @@ class External {
         bool exists(const char * path);
         File getFile (const char * path);
 };
+#endif
