@@ -11,8 +11,8 @@ void setup()
 
 
 
-  network.create_access_point();
-  //network.connect();
+  //network.create_access_point();
+  network.connect();
   _webManager.start();
   com.begin();
 }
