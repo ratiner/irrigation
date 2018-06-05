@@ -1,0 +1,15 @@
+<div class="main-nav">
+  <div class="card">
+    <div class="content">
+      <div class="card-body">
+    
+        <a *ngFor="let link of links" class="col-12 btn btn-link" [routerLink]="link.href" routerLinkActive="active">
+          <i [ngClass]="link.icon"></i>
+          {{link.title}}
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+</div>

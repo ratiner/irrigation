@@ -1,8 +1,7 @@
 #include "webManager.hpp"
-#include "external.hpp"
 
-External * _external;
-Com * _com;
+
+
 WebManager::WebManager()
 {
 }
@@ -115,19 +114,24 @@ void WebManager::doStaticContent(String path)
 
   if(!_external->exists(path.c_str()))
   {
-      this->doError(404, "File not found");
-      Debug::println("File not found");
-      return;
+      path = "/index.htm"; //fix for angular rewrite module.
+      if(!_external->exists(path.c_str()))
+      {
+        this->doError(404, "File not found");
+        Debug::println("File not found");
+        return;
+      }
   }
 
   File fl = _external->getFile(path.c_str());
 
   if(fl)
   {
-    
     _client->println("HTTP/1.1 200 OK");
     _client->print("Content-type:");
     _client->println(contentType);
+    _client->print("Cache-Control:");
+    _client->println("max-age=321274");
     _client->println("Connection: close");
     _client->println();
 
@@ -140,6 +144,7 @@ void WebManager::doStaticContent(String path)
     this->doError(500, "File read error");
     Debug::println("File read error");
   }
+  
 }
 
 void WebManager::doError(int errorCode, const char * message)

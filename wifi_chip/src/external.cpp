@@ -11,7 +11,7 @@ bool External::init(void)
     
     Debug::print("Initializing SD card...");
 
-    if (!SD.begin(4)) {
+    if (!SD.begin(SS)) {
         Debug::println("initialization failed!");
         return false;
     }

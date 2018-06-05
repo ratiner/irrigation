@@ -3,11 +3,15 @@
 #include <ESP8266WiFi.h>
 #include "com.hpp"
 #include "debug.hpp"
+#include "external.hpp"
 
 class WebManager {
     String _req;
     WiFiServer * _server;
     WiFiClient * _client;
+
+   External * _external;
+    Com * _com;
 
     public:
     WebManager();

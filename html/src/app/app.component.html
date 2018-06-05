@@ -1,0 +1,30 @@
+<div class="container-fluid ui-background">
+
+    <header  class="container-fluid">
+        <div class="row">
+          <div class="col-12 col-md-6">
+              <img class="col-12 img-responsive logo" src="assets/logo.png" />
+          </div>
+              <nav class="col-12 col-md-5 nav">
+                  <a class="nav-link" routerLink="/home" routerLinkActive="active"> <span class="icon-home"></span></a>
+                  <a class="nav-link" routerLink="/scheduler" routerLinkActive="active"> <span class="icon-calendar"></span></a>
+                  <a class="nav-link" routerLink="/settings" routerLinkActive="active"> <span class="icon-cog"></span></a>
+                  <a class="nav-link" routerLink="/login" routerLinkActive="active"><span class="icon-logout"></span></a>
+              </nav>
+        </div>
+
+    </header>
+
+    <div class="offset-md-12 ui-container">
+            <router-outlet></router-outlet>
+    </div>
+
+    <footer  class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <p>Copyright &copy; 2018 Kiril Lain and Roman Ratiner. With the spirit of Michael Gankin</p>
+          </div>
+        </div>
+      </footer>
+  
+</div>

@@ -1,0 +1,40 @@
+.main-nav {
+    margin: 0px 0px 0px 0px;
+  }
+  
+    .main-nav .card {
+      border-width: 0px;
+      background-color:transparent;
+    }
+  
+    .main-nav i {
+      padding-right: 10px;
+    }
+  
+    .main-nav .card-body {
+      background-color:transparent;
+      color:#333333;
+    }
+  
+      .main-nav .card-body a {
+        border-bottom: solid 1px #777777;
+        text-decoration:none;
+        text-align: left;
+        color: #333333;
+        display:block;
+      }
+  
+      .main-nav .card-body a:hover {
+        border-bottom: solid 1px #777777;
+        background-color:#86d49e;
+        text-decoration: none;
+      }
+      .main-nav .card-body a.active {
+        background-color:#86d49e;
+        color:black;
+      }
+  
+
+
+
+  

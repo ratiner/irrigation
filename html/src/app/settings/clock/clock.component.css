@@ -1,0 +1,6 @@
+input[type="text"],
+input[type="email"],
+input[type="time"],
+input[type="date"] {
+	height: 2.375rem;
+}
