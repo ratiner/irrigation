@@ -1,7 +1,6 @@
 #ifndef DEBUG_H
 #define DEBUG_H
 
-#include <cstdio>
 #include <Arduino.h>
 
 class Debug {

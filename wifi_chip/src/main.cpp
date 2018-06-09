@@ -1,28 +1,27 @@
 #include "main.hpp"
 
 String header;
-WebManager * _webManager;
-Com com;
-External * _external;
+WebServer * _webServer;
 
 void setup()
 {
   Debug::begin();
-  _external = new External();
-  _external->init();
+  External.init();
 
   Net network;
-  
+
   network.connect();
 
-  _webManager = new WebManager(_external);
-  _webManager->start();
-  com.begin();
+  _webServer = new WebServer();
+  _webServer->begin();
+  //COM.begin();
+
+   Debug::println("Ver:1.03");
 }
 
 
 void loop()
 {
-  _webManager->tryHandleClient();
-  com.listen();
+  _webServer->handleClient();
+  COM.listen();
 }

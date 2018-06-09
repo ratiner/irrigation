@@ -7,7 +7,6 @@
 #include <SD.h>
 #include "debug.hpp"
 
-
 struct NetworkSettings {
     String ap_ip;
     String ap_network;
@@ -17,10 +16,13 @@ struct NetworkSettings {
     bool wifi_enabled;
 };
 
-class Settings {
+class SettingsClass {
     const char *networkSettingsFile = "/config/network.cfg";
 
     public:
         struct NetworkSettings getNetworkSettings();
 };
+
+extern SettingsClass Settings;
+
 #endif

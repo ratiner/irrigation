@@ -1,4 +1,6 @@
-#include <cstdio>
+#ifndef NET_H
+#define NET_H
+
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include "debug.hpp"
@@ -12,3 +14,5 @@ class Net {
     bool create_access_point (void);
     bool connect (void);
 };
+
+#endif

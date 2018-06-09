@@ -1,10 +1,10 @@
 #include "external.hpp"
 
-External::External()
+ExternalClass::ExternalClass()
 {
 }
 
-bool External::init(void)
+bool ExternalClass::init(void)
 {
     if(_isInit)
         return true;
@@ -20,7 +20,7 @@ bool External::init(void)
     this->_isInit = true;
 }
 
-File External::getFile(const char * path) {
+File ExternalClass::getFile(const char * path) {
     //if(!this->init())
     //    return false;
     
@@ -30,6 +30,8 @@ File External::getFile(const char * path) {
     return f;
 }
 
-bool External::exists(const char * path) {
+bool ExternalClass::exists(const char * path) {
     return SD.exists(path);
 }
+
+ExternalClass External;

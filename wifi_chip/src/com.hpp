@@ -5,8 +5,10 @@
 #include <icom.hpp>
 #include "debug.hpp"
 
-class Com : public ICom {
+class ComClass : public ICom {
     private:
         void onReceived(ComMessage * req);
 };
+
+extern ComClass COM;
 #endif

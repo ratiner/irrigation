@@ -1,18 +1,19 @@
 #ifndef EXTERNAL_H
 #define EXTERNAL_H
 
-#include <cstdio>
 #include <Arduino.h>
 #include <SPI.h>
 #include <SD.h>
 #include "debug.hpp"
 
-class External {
+class ExternalClass {
     bool _isInit = false;
     public:
-        External();
+        ExternalClass();
         bool init (void);
         bool exists(const char * path);
         File getFile (const char * path);
 };
+
+extern ExternalClass External;
 #endif

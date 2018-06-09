@@ -11,8 +11,7 @@ bool Net::create_access_point(void)
 
 bool Net::connect(void)
 {
-  Settings * settings = new Settings();
-  NetworkSettings ns =  settings->getNetworkSettings();
+  NetworkSettings ns =  Settings.getNetworkSettings();
   if(ns.wifi_enabled)
   {
     _localIp = WiFi.begin(ns.wifi_network.c_str(), ns.wifi_password.c_str());
@@ -40,6 +39,4 @@ bool Net::connect(void)
         Debug::println(ns.ap_ip);
       }
   }
-
-  delete settings;
 }
