@@ -2,13 +2,14 @@
 
 struct NetworkSettings SettingsClass::getNetworkSettings()
 {
-    File file = SD.open(networkSettingsFile);
+    File file = SD.open(networkSettingsFile, FILE_READ);
     if (!file)
         Debug::println("Failed to open");
     StaticJsonBuffer<512> jsonBuffer;
 
     JsonObject &root = jsonBuffer.parseObject(file);
     file.close();
+
     if (!root.success())
         Debug::println("Failed to read file, using default configuration");
 
@@ -20,6 +21,15 @@ struct NetworkSettings SettingsClass::getNetworkSettings()
     ns.wifi_password = root["wifi_password"] | "";
     ns.wifi_enabled = root["wifi_enabled"] | false;
     return ns;
+}
+
+void SettingsClass::setNetworkSettings(String & settings) 
+{
+    File file = SD.open(networkSettingsFile, O_WRITE | O_CREAT | O_TRUNC);
+    if (!file)
+        Debug::println("Failed to open");
+    file.print(settings);
+    file.close();
 }
 
 SettingsClass Settings;

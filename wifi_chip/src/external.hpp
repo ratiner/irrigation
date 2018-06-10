@@ -12,7 +12,9 @@ class ExternalClass {
         ExternalClass();
         bool init (void);
         bool exists(const char * path);
-        File getFile (const char * path);
+        File& getFile (const char * path);
+        File& getFileW(const char * path);
+
 };
 
 extern ExternalClass External;

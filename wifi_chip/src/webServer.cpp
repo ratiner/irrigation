@@ -40,7 +40,8 @@ void WebServer::handleClient(void)
     {
         if (!_client.available())
         {
-            if (millis() - _statusChange > HTTP_MAX_DATA_WAIT) {
+            if (millis() - _statusChange > HTTP_MAX_DATA_WAIT)
+            {
                 _close();
             }
             yield();
@@ -58,7 +59,7 @@ void WebServer::handleClient(void)
         bool handled = _req->handleRequest(_client);
         delete _req;
 
-        if(handled || !_client.connected())
+        if (handled || !_client.connected())
         {
             _close();
             return;
@@ -75,7 +76,7 @@ void WebServer::handleClient(void)
     {
         if (millis() - _statusChange > HTTP_MAX_CLOSE_WAIT)
         {
-           _close();
+            _close();
         }
         else
         {
@@ -85,9 +86,10 @@ void WebServer::handleClient(void)
     }
 }
 
-bool WebServer::_close(void) {
+bool WebServer::_close(void)
+{
     //if(_client)
-   //     _client.stop(); 
+    //     _client.stop();
 
     _client = WiFiClient();
     _currentStatus = HC_NONE;
@@ -111,7 +113,6 @@ bool WebServer::_parseRequest(void)
         return false;
     }
 
-    
     String method = req.substring(0, addr_start);
     String url = req.substring(addr_start + 1, addr_end);
     String versionEnd = req.substring(addr_end + 8);
@@ -124,11 +125,32 @@ bool WebServer::_parseRequest(void)
         url = url.substring(0, hasSearch);
     }
 
+    String header;
+    String body;
+    if (method == "POST" || method == "PUT")
+    {
+        header = _client.readStringUntil('\r');
+        _client.readStringUntil('\n');
+        while(header != "") {
+            header = _client.readStringUntil('\r');
+            _client.readStringUntil('\n');
+        }
+
+        body = _client.readStringUntil('\r');
+        _client.readStringUntil('\n');
+        while(header != "") {
+            body += _client.readStringUntil('\r');
+            _client.readStringUntil('\n');
+        }
+    }
+
     _req = new WebRequest();
     _req->setMethod(method);
     _req->setVersion(version);
     _req->setQuerString(searchStr);
     _req->setUrl(url);
+    _req->setBody(body);
+    _client.flush();
     return true;
 }
 
@@ -164,5 +186,3 @@ String WebServer::urlDecode(const String &text)
     }
     return decoded;
 }
-
-

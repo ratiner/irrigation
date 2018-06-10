@@ -20,11 +20,21 @@ bool ExternalClass::init(void)
     this->_isInit = true;
 }
 
-File ExternalClass::getFile(const char * path) {
+File& ExternalClass::getFile(const char * path) {
     //if(!this->init())
     //    return false;
     
     File f = SD.open(path, FILE_READ);
+    if(!f)
+        Debug::println("Failed to open");
+    return f;
+}
+
+File& ExternalClass::getFileW(const char * path) {
+    //if(!this->init())
+    //    return false;
+    
+    File f = SD.open(path, O_WRITE | O_CREAT | O_TRUNC);
     if(!f)
         Debug::println("Failed to open");
     return f;

@@ -35,3 +35,13 @@ void APISettings::Network_GetConfig(WiFiClient &client)
     root["wifi_enabled"] = ns.wifi_enabled;
     root.printTo(client);
 }
+
+void APISettings::Network_SetConfig(WiFiClient& client, String& body)
+{
+    Settings.setNetworkSettings(body);
+
+    StaticJsonBuffer<100> jsonBuffer;
+    JsonObject &root = jsonBuffer.createObject();
+    root["Status"] = "OK";
+    root.printTo(client);
+}

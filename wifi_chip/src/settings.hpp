@@ -8,11 +8,11 @@
 #include "debug.hpp"
 
 struct NetworkSettings {
-    String ap_ip;
-    String ap_network;
-    String ap_password;
-    String wifi_network;
-    String wifi_password;
+    const char * ap_ip;
+    const char * ap_network;
+    const char * ap_password;
+    const char * wifi_network;
+    const char * wifi_password;
     bool wifi_enabled;
 };
 
@@ -21,6 +21,7 @@ class SettingsClass {
 
     public:
         struct NetworkSettings getNetworkSettings();
+        void setNetworkSettings(String& settings);
 };
 
 extern SettingsClass Settings;

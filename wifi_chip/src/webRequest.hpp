@@ -14,11 +14,13 @@ class WebRequest {
     String method;
     int version;
     String queryString;
+    String body;
     public:
         void setUrl(String&);
         void setMethod(String&);
         void setVersion(int&);
         void setQuerString(String&);
+        void setBody(String &);
         bool handleRequest(WiFiClient&);
     private:
         void _doApiRequest(WiFiClient&);

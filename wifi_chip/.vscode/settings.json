@@ -12,6 +12,7 @@
         "vector": "cpp",
         "cstdio": "cpp",
         "*.tcc": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "sstream": "cpp"
     }
 }

@@ -12,6 +12,7 @@ class APISettings {
     public:
         static void Network_ScanWiFi(WiFiClient&);
         static void Network_GetConfig(WiFiClient&);
+        static void Network_SetConfig(WiFiClient&, String& body);
     protected: 
 
 

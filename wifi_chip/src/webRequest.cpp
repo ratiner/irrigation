@@ -28,9 +28,8 @@ void WebRequest::_doApiRequest(WiFiClient& client)
 
         else if(url.indexOf("/api/settings/network") > -1) 
         {
-            if(method == "POST") {
-
-            }
+            if(method == "POST")
+                APISettings::Network_SetConfig(client, body);
             else
                 APISettings::Network_GetConfig(client);
         }
@@ -166,4 +165,8 @@ void WebRequest::setVersion(int &iVersion)
 void WebRequest::setQuerString(String &query)
 {
     this->queryString = query;
+}
+void WebRequest::setBody(String &body)
+{
+    this->body = body;
 }
