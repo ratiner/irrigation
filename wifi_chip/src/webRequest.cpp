@@ -18,12 +18,21 @@ void WebRequest::_doApiRequest(WiFiClient& client)
 {  
         client.println("HTTP/1.1 200 OK");
         client.println("Content-type:application/json");
-        client.println("Connection: close");
+        client.println("Connection:close");
         client.println();
 
         if(url.indexOf("/api/settings/network/scan") > -1)
         {
             APISettings::Network_ScanWiFi(client);
+        }
+
+        else if(url.indexOf("/api/settings/network") > -1) 
+        {
+            if(method == "POST") {
+
+            }
+            else
+                APISettings::Network_GetConfig(client);
         }
 
         else if (url.indexOf("1/on") > 0)
@@ -77,7 +86,7 @@ void WebRequest::_doStaticContent(WiFiClient& client)
         client.println(contentType);
         client.print("Cache-Control:");
         client.println("max-age=321274");
-        client.println("Connection: close");
+        client.println("Connection:close");
         client.println();
         while (fl.available())
             client.write(fl);

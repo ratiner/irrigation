@@ -11,6 +11,7 @@
 class APISettings {
     public:
         static void Network_ScanWiFi(WiFiClient&);
+        static void Network_GetConfig(WiFiClient&);
     protected: 
 
 
