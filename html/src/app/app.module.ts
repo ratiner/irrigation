@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { SideMenuComponent } from './shared/side-menu/side-menu.component';
 import { NetworkComponent } from './settings/network/network.component';
 import { ClockComponent } from './settings/clock/clock.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 const routes: Routes = [
@@ -42,6 +43,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(routes),
     FormsModule
   ],

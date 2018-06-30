@@ -7,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SchedulerComponent implements OnInit {
   sidebar: Array<any> = [
-    {title: "Network2", icon: "icon-cog", href: "/settings/network"},
-    {title: " Tim2e", icon: "icon-calendar", href: "/settings/clock"}
+    {title: "Program 1", icon: "icon-calendar", href: "/settings/network"},
+    {title: " Program 2", icon: "icon-calendar", href: "/settings/clock"},
+    {title: " Program 3", icon: "icon-calendar", href: "/settings/clock"},
+    {title: " Program 4", icon: "icon-calendar", href: "/settings/clock"}
   ];
 
   constructor() { }

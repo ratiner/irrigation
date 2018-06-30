@@ -1,3 +1,115 @@
-<p>
-  network works!
-</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 status">
+            <div class="col-12 header">
+                <i class="icon-signal"></i> Status
+                <button class="btn btn-primary btn-sm float-right" *ngIf="!setup">
+                    <i class="icon-arrows-cw"></i>
+                </button>
+                <button class="btn btn-secondary btn-sm float-right" style="margin-right:10px;" *ngIf="!setup" (click)="setup = 'menu'">
+                    <i class="icon-cog"></i>Change</button>
+                <div style="clear:both"></div>
+            </div>
+
+
+
+            <div class="row content" *ngIf="!setup">
+                <div class="col-6 align-middle">
+                    <img src="assets/wifi/{{current.RSSI}}.png" style="max-width:24px; min-width:24px;" /> {{current.SSID}}
+                </div>
+                <div class="col-6">
+                    <i class="ai icon-network"></i> {{current.IP}}</div>
+                <div class="col-12 prop" *ngIf="current.KEY.length > 0">
+                    <i class="icon-lock"></i> {{ current.KEY}}</div>
+                <div class="col-12 prop">WiFi Mode: {{ current.MODE}}</div>
+            </div>
+
+
+            <div class="row content" *ngIf="setup === 'menu'">
+                <div class="col-10 col-md-11 header2" style="margin-left:20px; margin-right:20px;">
+                        <button class="btn btn-light btn-sm float:left" (click)="setup = false"><i class="icon-undo"></i></button>
+                        Options
+                </div>
+                <div class="offset-1 col-10 network"  (click)="setup = 'sta'">Connect to a network</div>
+                <div class="offset-1 col-10 network"  (click)="setup = 'ap'">Configure AP Mode</div>   
+            </div>
+
+            <div class="row content" *ngIf="setup === 'sta'">
+                    <div class="col-10 col-md-11 header2" style="margin-left:20px; margin-right:20px;">
+                            <button class="btn btn-light btn-sm float:left" (click)="setup = 'menu'">
+                                    <i class="icon-undo"></i>
+                            </button>
+    
+                            Select network:
+                      
+                            <button class="btn btn-light btn-sm float-right">
+                                    <i class="icon-arrows-cw"></i>
+                                </button>
+                    </div>
+                    <div class="offset-1 col-10 network" *ngFor="let net of networks">
+                        <img src="assets/wifi/{{dbTolevel(net.RSSI)}}.png" style="max-width:24px; min-width:24px;" /> {{net.SSID}}
+                        <i *ngIf="net.SECURED" class="icon-lock float-right"></i>
+                        <div style="clear:both"></div>
+                    </div>
+            </div>
+
+            <div class="row content" *ngIf="setup === 'ap'">
+                    <div class="col-10 col-md-11 header2" style="margin-left:20px; margin-right:20px;">
+                            <button class="btn btn-light btn-sm float:left" (click)="setup = 'menu'"><i class="icon-undo"></i></button>
+                            Configure AP
+                    </div>
+                    <div class="offset-1 col-10">
+                           
+                            <form>
+                                    <div class="form-group row">
+                                      <label for="ap_ssid" class="col-sm-4 col-form-label">AP SSID</label>
+                                      <div class="col-sm-8">
+                                        <input type="text" name="ap_ssid" class="form-control" id="ap_ssid" placeholder="Network name" [(ngModel)]="config.ap_network">
+                                      </div>
+                                    </div>
+                                    <div class="form-group row">
+                                      <label for="ap_pw" class="col-sm-4 col-form-label">AP Password</label>
+                                      <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="ap_pw" name="ap_pw" placeholder="Password"   [(ngModel)]="config.ap_password">
+                                      </div>
+                                    </div>
+                                    <div class="form-group row">
+                                            <label for="ap_ip" class="col-sm-4 col-form-label">AP IP</label>
+                                            <div class="col-sm-8">
+                                              <input type="text" class="form-control" name="ap_ip" id="ap_ip" placeholder="Controller IP Address"  [(ngModel)]="config.ap_ip">
+                                            </div>
+                                    </div>
+                                  </form>
+                                  
+
+                    </div>
+
+            
+                    <div class="col-12 text-center" style="margin-top:20px;">
+                
+                            <button class="btn btn-primary btn-sm">
+                                    <i class="icon-ok"></i>Save
+                            </button>
+                            <div style="width:10px; display:inline-block"></div>
+                            <button class="btn btn-secondary btn-sm">
+                                    <i class="icon-undo"></i>Cancel
+                            </button>
+    
+                    </div>
+                  
+            </div>
+
+            <div class="row content" *ngIf="isSetup == 2">
+                <div class="offset-1 col-10 header2">
+                    Connecting to selected network
+                </div>
+
+
+                <div class="offset-1 col-10 network">
+                    <i class="icon-lock"></i>
+                    <input type="text" />
+                </div>
+
+            </div>
+        </div>
+    </div>

@@ -8,8 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class SettingsComponent implements OnInit {
 
   sidebar: Array<any> = [
-      {title: "Network", icon: "icon-cog", href: "/settings/network"},
-      {title: "Date and Time", icon: "icon-calendar", href: "/settings/clock"}
+      {title: "Network", icon: "icon-signal", href: "/settings/network"},
+      {title: "Date and Time", icon: "icon-clock", href: "/settings/clock"}
   ];
   constructor() { }
 

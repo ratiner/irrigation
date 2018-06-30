@@ -33,6 +33,8 @@ void APISettings::Network_GetConfig(WiFiClient &client)
     root["wifi_network"] = ns.wifi_network;
     root["wifi_password"] = ns.wifi_password;
     root["wifi_enabled"] = ns.wifi_enabled;
+    root["RSSI"] = WiFi.RSSI();
+    root["ip"] = Wns.wifi_enabled ? WiFi.localIP().toString() :WiFi.softAPIP();
     root.printTo(client);
 }
 
