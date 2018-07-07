@@ -2,11 +2,13 @@
 
 TimeStamp startTime;
 TimeStamp endTime;
-
+ int n;
+ int started;
 Clock clk;
 void setup() {
     Wire.begin();
  Serial.begin(9600);
+ 
     startTime.year = 2018;
     startTime.month = 6;
     startTime.day = 9;
@@ -26,13 +28,20 @@ void setup() {
     endTime.sec = 15;
     
 
-    _com = new Com();
-    _com->begin();
+n=0;
+    //_com = new Com();
+    //_com->begin();
     clk.begin();
     pinMode(13,OUTPUT);
+    pinMode(8, OUTPUT);
+    pinMode(9, OUTPUT);
+    pinMode(2, INPUT_PULLUP);
 
-   
-   
+    attachInterrupt(digitalPinToInterrupt(2), waterPulse, FALLING);
+    digitalWrite(13,LOW);
+    digitalWrite(8, HIGH);
+    digitalWrite(9, HIGH);
+    started = 0;
 }
 
 
@@ -40,22 +49,41 @@ void setup() {
 
 
 void loop() {
-    _com->listen();
+
+   // _com->listen();
      TimeStamp * t = clk.getTime();
-   
+   Serial.println(n);
    Serial.print(t->compareTo(startTime));
-    if(t->compareTo(startTime) <=0) {
+    if(started == 0 && t->compareTo(startTime) <=0) {
         //turn on led
         digitalWrite(13,HIGH);
+        digitalWrite(8, HIGH);
+        digitalWrite(9, LOW);
+        delay(10);
+        digitalWrite(8, HIGH);
+        digitalWrite(9, HIGH);
+        started = 1;
     }
 
    
 
    
 
-    if(t->compareTo(endTime) <= 0) {
+    if(started == 1 && t->compareTo(endTime) <= 0) {
         //turn off led
         digitalWrite(13,LOW);
+        digitalWrite(8, LOW);
+        digitalWrite(9, HIGH);
+        delay(10);
+        digitalWrite(8, HIGH);
+        digitalWrite(9, HIGH);
+        started =2 ;
     }
     //TODO: Kiril Stuff :)
+}
+
+void waterPulse() {
+    n++;
+ 
+ //digitalWrite(13,HIGH);
 }

@@ -8,3 +8,5 @@ Com * _com;
 
 void setup();
 void loop();
+
+void waterPulse();
