@@ -9,7 +9,7 @@ void setup() {
     Wire.begin();
  Serial.begin(9600);
  
-    startTime.year = 2018;
+    startTime.year = 18;
     startTime.month = 6;
     startTime.day = 9;
     startTime.hour = 20;
@@ -20,7 +20,7 @@ void setup() {
 
      startTime.sec = 10;
 
-    endTime.year = 2018;
+    endTime.year = 18;
     endTime.month = 6;
     endTime.day = 9;
     endTime.hour = 20;
@@ -52,8 +52,7 @@ void loop() {
 
    // _com->listen();
      TimeStamp * t = clk.getTime();
-   Serial.println(n);
-   Serial.print(t->compareTo(startTime));
+   Serial.println(t->compareTo(startTime));
     if(started == 0 && t->compareTo(startTime) <=0) {
         //turn on led
         digitalWrite(13,HIGH);
