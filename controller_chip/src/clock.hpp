@@ -13,7 +13,6 @@ class Clock {
       void setTime(TimeStamp& stamp);
     private:
         TimeStamp * _now;
-        //RTClib RTC;
         DS3231 DSClock;
 };
 #endif
