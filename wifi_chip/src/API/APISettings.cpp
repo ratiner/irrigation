@@ -34,7 +34,7 @@ void APISettings::Network_GetConfig(WiFiClient &client)
     root["wifi_password"] = ns.wifi_password;
     root["wifi_enabled"] = ns.wifi_enabled;
     root["RSSI"] = WiFi.RSSI();
-    root["ip"] = Wns.wifi_enabled ? WiFi.localIP().toString() :WiFi.softAPIP();
+    root["ip"] = ns.wifi_enabled ? WiFi.localIP().toString() :WiFi.softAPIP().toString();
     root.printTo(client);
 }
 
@@ -47,3 +47,28 @@ void APISettings::Network_SetConfig(WiFiClient& client, String& body)
     root["Status"] = "OK";
     root.printTo(client);
 }
+
+
+
+void APISettings::Network_GetClock(WiFiClient &client)
+{
+    ComMessage * result = COM.send(ComClass::CMD_READ, ComClass::KEY_CLOCK, NULL);
+
+    StaticJsonBuffer<50> jsonBuffer;
+    JsonObject &root = jsonBuffer.createObject();
+    root["stamp"] = result->getValue();
+    root.printTo(client);
+    delete result;
+}
+
+void APISettings::Network_SetClock(WiFiClient& client, String& body)
+{
+    ComMessage * result = COM.send(ComClass::CMD_WRITE, ComClass::KEY_CLOCK, body.c_str());
+    StaticJsonBuffer<50> jsonBuffer;
+    JsonObject &root = jsonBuffer.createObject();
+    root["status"] = result->getValue();
+    root.printTo(client);
+    delete result;
+}
+
+

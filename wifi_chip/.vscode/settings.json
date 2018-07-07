@@ -13,6 +13,7 @@
         "cstdio": "cpp",
         "*.tcc": "cpp",
         "fstream": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "functional": "cpp"
     }
 }

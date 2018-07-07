@@ -33,7 +33,14 @@ void WebRequest::_doApiRequest(WiFiClient& client)
             else
                 APISettings::Network_GetConfig(client);
         }
+        else if(url.indexOf("/api/settings/clock") > -1) 
+        {
+            if(method == "POST")
+                APISettings::Network_SetClock(client, body);
+            else
+                APISettings::Network_GetClock(client);
 
+        }
         else if (url.indexOf("1/on") > 0)
         {
 

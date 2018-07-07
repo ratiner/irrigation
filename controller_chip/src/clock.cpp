@@ -1,7 +1,4 @@
 #include "clock.hpp"
-void Clock::begin()
-{
-}
 
 TimeStamp * Clock::getTime()
 {
@@ -33,3 +30,5 @@ void Clock::setTime(TimeStamp &newTime)
   DSClock.setMinute(newTime.min);
   DSClock.setSecond(newTime.sec);
 }
+
+Clock CLOCK;

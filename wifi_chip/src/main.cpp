@@ -14,9 +14,9 @@ void setup()
 
   _webServer = new WebServer();
   _webServer->begin();
-  //COM.begin();
+  COM.begin();
 
-   Debug::println("Ver:1.03");
+   Debug::println("Ver:1.04");
 }
 
 

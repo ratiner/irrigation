@@ -11,7 +11,7 @@ export class NetworkComponent implements OnInit {
   networks: Array<any>;
   config: any;
   current: any;
-  setup: false;
+  setup: String;
   
   constructor(
     private settingsService: SettingsService

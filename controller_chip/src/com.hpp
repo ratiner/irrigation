@@ -3,9 +3,13 @@
 
 #include <Arduino.h>
 #include <icom.hpp>
+#include "clock.hpp"
+#include <TimeStamp.hpp>
 
-class Com : public ICom {
+class ComClass : public ICom {
     private:
         void onReceived(ComMessage * req);
 };
+
+extern ComClass COM;
 #endif

@@ -8,11 +8,12 @@
 
 class Clock {
     public:
-      void begin();
       TimeStamp * getTime();
       void setTime(TimeStamp& stamp);
     private:
         TimeStamp * _now;
         DS3231 DSClock;
 };
+
+extern Clock CLOCK;
 #endif

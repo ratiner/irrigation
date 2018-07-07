@@ -32,4 +32,12 @@ export class SettingsService {
       return this.http.get<any>('/api/settings/network/scan');
   }
 
+  public getClock(): Observable<any> {
+    return this.http.get<any>('/api/settings/clock');
+  }
+
+  public setClock(dateTime: Date): Observable<any> {
+    return this.http.post<any>('/api/settings/clock', dateTime.toISOString() + dateTime.getDay());
+  }
+
 }

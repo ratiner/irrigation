@@ -18,6 +18,7 @@ class TimeStamp {
         byte doW;
 
         int compareTo(TimeStamp& otherTime);
+        const char * getStr();
 
 };
 #endif

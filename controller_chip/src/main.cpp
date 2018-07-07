@@ -4,10 +4,10 @@ TimeStamp startTime;
 TimeStamp endTime;
  int n;
  int started;
-Clock clk;
 void setup() {
+
+    COM.begin();
     Wire.begin();
- Serial.begin(9600);
  
     startTime.year = 18;
     startTime.month = 6;
@@ -15,8 +15,6 @@ void setup() {
     startTime.hour = 20;
     startTime.min = 40;
     startTime.sec = 0;
-
-     clk.setTime(startTime);
 
      startTime.sec = 10;
 
@@ -29,9 +27,7 @@ void setup() {
     
 
 n=0;
-    //_com = new Com();
-    //_com->begin();
-    clk.begin();
+
     pinMode(13,OUTPUT);
     pinMode(8, OUTPUT);
     pinMode(9, OUTPUT);
@@ -50,12 +46,13 @@ n=0;
 
 void loop() {
 
-   // _com->listen();
-     TimeStamp * t = clk.getTime();
-   Serial.println(t->compareTo(startTime));
+    COM.listen();
+
+     TimeStamp * t = CLOCK.getTime();
+
     if(started == 0 && t->compareTo(startTime) <=0) {
         //turn on led
-        digitalWrite(13,HIGH);
+      //  digitalWrite(13,HIGH);
         digitalWrite(8, HIGH);
         digitalWrite(9, LOW);
         delay(10);
@@ -70,7 +67,7 @@ void loop() {
 
     if(started == 1 && t->compareTo(endTime) <= 0) {
         //turn off led
-        digitalWrite(13,LOW);
+        //digitalWrite(13,LOW);
         digitalWrite(8, LOW);
         digitalWrite(9, HIGH);
         delay(10);

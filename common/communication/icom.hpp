@@ -17,6 +17,7 @@ class ICom {
         static const int CMD_DEBUG = 1;
         static const int CMD_READ = 2;
         static const int CMD_WRITE = 3;
+        static const int KEY_CLOCK = 0;
 
         void begin (void);
         void listen(void);
