@@ -1,0 +1,29 @@
+.status {
+    border:solid 1px #b0b0be;
+    padding:0;
+    background-color:#ffffffda;
+    padding-bottom:10px;
+}
+
+
+.header {
+    padding:5px;
+    font-weight:bold;
+    background-color:#d5d4ec;
+}
+
+.content {
+    padding:5px;
+}
+
+.prop {
+    margin-top:25px;
+}
+
+.header2 {
+    font-weight:bold;
+    border-bottom: solid 2px #b0b0be;
+    padding:5px;
+    padding-bottom:0;
+    margin-bottom:5px;
+}

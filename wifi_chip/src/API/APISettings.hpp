@@ -17,6 +17,9 @@ class APISettings {
 
         static void Network_GetClock(WiFiClient&);
         static void Network_SetClock(WiFiClient&, String& body);
+
+        static void IO_Get(WiFiClient&);
+        static void IO_Set(WiFiClient&, String& body);
     protected: 
 
 

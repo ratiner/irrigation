@@ -16,12 +16,44 @@ struct NetworkSettings {
     bool wifi_enabled;
 };
 
+/*
+struct Counter {
+    byte ports[2];
+};
+
+struct Valve {
+    byte id;
+    byte ports[2];
+    byte mode;
+};
+
+struct IOSettings {
+    Counter main_counter;
+    int valves_count;
+    Valve * valves;
+};
+
+
+struct Program {
+    
+}
+*/
+
+
 class SettingsClass {
     const char *networkSettingsFile = "/config/network.cfg";
+    const char *ioSettingsFile = "/config/io.cfg";
+    const char *programSettingsFolder = "/config/programs/";
 
     public:
         struct NetworkSettings getNetworkSettings();
         void setNetworkSettings(String& settings);
+        File & getIOSettings();
+        void setIOSettings(String& settings);
+        byte getPrograms();
+        File & getProgram(String & id);
+        void setProgram(byte id, String& settings);
+
 };
 
 extern SettingsClass Settings;

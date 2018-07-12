@@ -2,13 +2,13 @@
 
 void Debug::begin(void)
 {
-    Serial1.begin(9600);
+    Serial.begin(9600);
     Debug::println("");
 }
 
 void Debug::print (String & text) 
 {
-    Serial1.print(text);
+    Serial.print(text);
    
 }
 

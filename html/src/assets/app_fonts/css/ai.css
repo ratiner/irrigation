@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'ai';
-  src: url('../font/ai.eot?60126310');
-  src: url('../font/ai.eot?60126310#iefix') format('embedded-opentype'),
-       url('../font/ai.woff2?60126310') format('woff2'),
-       url('../font/ai.woff?60126310') format('woff'),
-       url('../font/ai.ttf?60126310') format('truetype'),
-       url('../font/ai.svg?60126310#ai') format('svg');
+  src: url('../font/ai.eot?92202947');
+  src: url('../font/ai.eot?92202947#iefix') format('embedded-opentype'),
+       url('../font/ai.woff2?92202947') format('woff2'),
+       url('../font/ai.woff?92202947') format('woff'),
+       url('../font/ai.ttf?92202947') format('truetype'),
+       url('../font/ai.svg?92202947#ai') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'ai';
-    src: url('../font/ai.svg?60126310#ai') format('svg');
+    src: url('../font/ai.svg?92202947#ai') format('svg');
   }
 }
 */
@@ -67,4 +67,5 @@
 .icon-ok:before { content: '\e809'; } /* '' */
 .icon-clock:before { content: '\e80a'; } /* '' */
 .icon-undo:before { content: '\e80b'; } /* '' */
+.icon-plug:before { content: '\e80c'; } /* '' */
 .icon-spin6:before { content: '\e839'; } /* '' */

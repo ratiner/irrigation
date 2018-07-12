@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include "API/APISettings.hpp"
+#include "API/APIScheduler.hpp"
 #include "com.hpp"
 #include "debug.hpp"
 #include "external.hpp"

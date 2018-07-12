@@ -72,3 +72,20 @@ void APISettings::Network_SetClock(WiFiClient& client, String& body)
 }
 
 
+void APISettings::IO_Get(WiFiClient &client)
+{
+    File io = Settings.getIOSettings();
+    while (io.available())
+        client.write(io);
+    io.close();
+}
+
+void APISettings::IO_Set(WiFiClient& client, String& body)
+{
+    Settings.setIOSettings(body);
+
+    StaticJsonBuffer<100> jsonBuffer;
+    JsonObject &root = jsonBuffer.createObject();
+    root["Status"] = "OK";
+    root.printTo(client);
+}

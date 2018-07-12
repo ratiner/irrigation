@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -13,6 +13,8 @@ import { SideMenuComponent } from './shared/side-menu/side-menu.component';
 import { NetworkComponent } from './settings/network/network.component';
 import { ClockComponent } from './settings/clock/clock.component';
 import { HttpClientModule } from '@angular/common/http';
+import { IoComponent } from './settings/io/io.component';
+import { ProgramEditComponent } from './scheduler/program-edit/program-edit.component';
 
 
 const routes: Routes = [
@@ -20,12 +22,18 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'error/:code', component: ErrorComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'settings', component: SettingsComponent, children: [
-      { path: 'network', component: NetworkComponent},
-      { path: 'clock', component: ClockComponent }
-    ] 
+  {
+    path: 'settings', component: SettingsComponent, children: [
+      { path: 'network', component: NetworkComponent },
+      { path: 'clock', component: ClockComponent },
+      { path: 'io', component: IoComponent }
+    ]
   },
-  { path: 'scheduler', component: SchedulerComponent },
+  {
+    path: 'scheduler', component: SchedulerComponent, children: [
+      { path: ':id', component: ProgramEditComponent },
+    ]
+  },
   { path: '**', redirectTo: '/error/not-found' }
 ];
 
@@ -39,7 +47,9 @@ const routes: Routes = [
     LoginComponent,
     SideMenuComponent,
     NetworkComponent,
-    ClockComponent
+    ClockComponent,
+    IoComponent,
+    ProgramEditComponent
   ],
   imports: [
     BrowserModule,

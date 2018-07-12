@@ -41,6 +41,26 @@ void WebRequest::_doApiRequest(WiFiClient& client)
                 APISettings::Network_GetClock(client);
 
         }
+        else if(url.indexOf("/api/settings/io") > -1) 
+        {
+            if(method == "POST")
+                APISettings::IO_Set(client, body);
+            else 
+                APISettings::IO_Get(client);
+        }
+
+        else if(url.indexOf("/api/scheduler") > -1) 
+        {
+            String id = url.substring(15);
+            if(id.length() == 0)
+                APIScheduler::Programs_Get(client);
+            //else if(method == "POST") 
+                //APIScheduler::Program_Set(client, body);
+            else
+                APIScheduler::Program_Get(id, client);
+        }
+
+      
         else if (url.indexOf("1/on") > 0)
         {
 
@@ -50,6 +70,9 @@ void WebRequest::_doApiRequest(WiFiClient& client)
         {
             //  COM.send(1, 1, "0");
         }
+
+        else 
+            _doError(client, 404, "Method API was in found");
 
 }
 
