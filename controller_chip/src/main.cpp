@@ -1,30 +1,11 @@
 #include "main.hpp"
 
-TimeStamp startTime;
-TimeStamp endTime;
  int n;
- int started;
 void setup() {
 
     COM.begin();
     Wire.begin();
  
-    startTime.year = 18;
-    startTime.month = 6;
-    startTime.day = 9;
-    startTime.hour = 20;
-    startTime.min = 40;
-    startTime.sec = 0;
-
-     startTime.sec = 10;
-
-    endTime.year = 18;
-    endTime.month = 6;
-    endTime.day = 9;
-    endTime.hour = 20;
-    endTime.min = 40;
-    endTime.sec = 15;
-    
 
 n=0;
 
@@ -37,9 +18,16 @@ n=0;
     digitalWrite(13,LOW);
     digitalWrite(8, HIGH);
     digitalWrite(9, HIGH);
-    started = 0;
+    //started = 0;
+
+    initIO();
+    Scheduler.init();
 }
 
+void initIO () {
+    ComMessage * io = COM.send(ComClass::CMD_READ, ComClass::KEY_IO, NULL);
+    delete io;
+}
 
 
 
@@ -47,6 +35,20 @@ n=0;
 void loop() {
 
     COM.listen();
+
+    LinkedList<Program*> * progs = Scheduler.getPrograms();
+    
+    Serial.print("\nProgs ");
+    Serial.println(progs->size());
+
+    Program * p;
+    for(int i=0; i< progs->size(); i++) 
+    {
+        p = progs->get(i);
+        Serial.println(p->name);
+    }
+    delay(5000);
+/*
 
      TimeStamp * t = CLOCK.getTime();
 
@@ -76,6 +78,7 @@ void loop() {
         started =2 ;
     }
     //TODO: Kiril Stuff :)
+    */
 }
 
 void waterPulse() {

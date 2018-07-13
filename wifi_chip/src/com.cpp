@@ -13,8 +13,27 @@ void ComClass::onReceived(ComMessage * req)
         }
         case ComClass::CMD_READ:
         {
-                transmit(req->getCommand(), req->getKey(), "3");
-                break;
+            if(req->getKey() == ComClass::KEY_IO)
+            {
+                File io = Settings.getIOSettings();
+                transmit(req->getCommand(), req->getKey(), io);
+                io.close();
+            }
+            else if(req->getKey() == ComClass::KEY_PROGRAM)
+            {
+                if(req->getValue() == NULL)
+                {
+                    String programs = String(Settings.getPrograms());
+                    transmit(req->getCommand(), req->getKey(),  programs.c_str());
+                }
+                else {
+                    String index = req->getValue();
+                    File prog = Settings.getProgram(index);
+                    transmit(req->getCommand(), req->getKey(),  prog);
+                    prog.close();
+                }
+            }
+            break;
         }
         case ComClass::CMD_WRITE:
         {
@@ -22,6 +41,7 @@ void ComClass::onReceived(ComMessage * req)
             break;
         }
     }
+    delete req;
 }
 
 ComClass COM;

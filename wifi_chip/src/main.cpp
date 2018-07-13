@@ -1,7 +1,7 @@
 #include "main.hpp"
 
 String header;
-WebServer * _webServer;
+WebServer *_webServer;
 
 void setup()
 {
@@ -16,9 +16,8 @@ void setup()
   _webServer->begin();
   COM.begin();
 
-   Debug::println("Ver:1.04");
+  Debug::println("Ver:1.04");
 }
-
 
 void loop()
 {

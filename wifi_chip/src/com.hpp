@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <icom.hpp>
 #include "debug.hpp"
+#include "settings.hpp"
 
 class ComClass : public ICom {
     private:

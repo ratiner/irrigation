@@ -32,12 +32,11 @@ void SettingsClass::setNetworkSettings(String &settings)
     file.close();
 }
 
-
-
-File& SettingsClass::getIOSettings()
+File &SettingsClass::getIOSettings()
 {
     File file = SD.open(ioSettingsFile, FILE_READ);
-    if (!file) {
+    if (!file)
+    {
         Debug::println("Failed to open");
     }
     return file;
@@ -52,8 +51,6 @@ void SettingsClass::setIOSettings(String &settings)
     file.close();
 }
 
-
-
 byte SettingsClass::getPrograms()
 {
     byte c = 0;
@@ -62,39 +59,58 @@ byte SettingsClass::getPrograms()
         Debug::println("Failed to open");
     else
     {
-        while(true)
+        while (true)
         {
-            File entry =  dir.openNextFile();
-            if (!entry) {
+            File entry = dir.openNextFile();
+            if (!entry)
+            {
                 // no more files
                 break;
             }
-            if(!entry.isDirectory())
+            if (!entry.isDirectory())
                 c++;
             entry.close();
         }
     }
-    dir.close();  
+    dir.close();
     return c;
 }
 
-File & SettingsClass::getProgram(String & id)
+File &SettingsClass::getProgram(String &index)
 {
-    String path = programSettingsFolder;
-    path += + "/" + id + ".cfg";
-    File file = SD.open(path, FILE_READ);
-    if (!file)
+    if(isDigit(index.charAt(0)))
+        return this->getProgram(index.toInt(), O_READ);
+    else
+        return this->getProgram(-1, O_READ);
+}
+
+File &SettingsClass::getProgram(byte index, uint8_t mode)
+{
+    File entry;
+    if (index > -1)
+    {
+        byte c = 0;
+        String path = programSettingsFolder;
+        File dir = SD.open(programSettingsFolder);
+        if (!dir)
+            Debug::println("Failed to open");
+
+        entry = dir.openNextFile(mode);
+        while (entry && c < index)
+        {
+            entry.close();
+            entry = dir.openNextFile(mode);
+            c++;
+        }
+    }
+    if (!entry)
         Debug::println("Failed to open");
-    return file;  
+    return entry;
 }
 
 void SettingsClass::setProgram(byte id, String &program)
 {
-    String path = programSettingsFolder;
-    path += "/" +id;
-    path += ".cfg";
-
-    File file = SD.open(path, O_WRITE | O_CREAT | O_TRUNC);
+    File file = this->getProgram(id, O_WRITE | O_CREAT | O_TRUNC);
     if (!file)
         Debug::println("Failed to open");
     file.print(program);

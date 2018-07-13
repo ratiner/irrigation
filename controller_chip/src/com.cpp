@@ -33,6 +33,8 @@ void ComClass::onReceived(ComMessage * req)
             break;
         }
     }
+
+    delete req;
 }
 
 ComClass COM;
