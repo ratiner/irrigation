@@ -54,8 +54,8 @@ void WebRequest::_doApiRequest(WiFiClient& client)
             String id = url.substring(15);
             if(id.length() == 0)
                 APIScheduler::Programs_Get(client);
-            //else if(method == "POST") 
-                //APIScheduler::Program_Set(client, body);
+            else if(method == "POST") 
+                APIScheduler::Program_Set(id, client, body);
             else
                 APIScheduler::Program_Get(id, client);
         }

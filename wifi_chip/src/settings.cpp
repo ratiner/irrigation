@@ -85,7 +85,7 @@ File &SettingsClass::getProgram(String &index, uint8_t mode)
 {
     String path = programSettingsFolder;
     path += index + ".cfg";
-    File entry= SD.open(path);
+    File entry= SD.open(path, mode);
     if (!entry)
         Debug::println("Failed to open");
     return entry;
@@ -95,6 +95,7 @@ File &SettingsClass::getProgram(String &index, uint8_t mode)
 
 void SettingsClass::setProgram(String &index, String &program)
 {
+
     File file = this->getProgram(index, O_WRITE | O_CREAT | O_TRUNC);
     if (!file)
         Debug::println("Failed to open");

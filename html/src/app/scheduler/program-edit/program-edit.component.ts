@@ -20,7 +20,8 @@ export class ProgramEditComponent implements OnInit {
   }
 
   save() {
-    
+    this.schService.setProgram("0", this.prog).subscribe(x => {
+    });
   }
 
 }

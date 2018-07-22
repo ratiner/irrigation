@@ -27,13 +27,13 @@ export class NetworkComponent implements OnInit {
 
   this.config = {
       ap_ip: "172.168.0.1",
-      ap_network: "Controller",
+      ap_network: "Irrigation Controller",
       ap_password: "password",
       wifi_network: "Ratiner",
       wifi_password: "123",
-      wifi_enabled: true,
+      wifi_enabled: false,
       RSSI: -55,
-      ip: "10.20.10.1"
+      ip: "172.168.0.1"
     };
 
   
@@ -42,6 +42,9 @@ export class NetworkComponent implements OnInit {
   }
 
   scanNetworks() {
+
+    
+/*
     this.networks = [
       {
         SSID: "network1",
@@ -65,12 +68,16 @@ export class NetworkComponent implements OnInit {
         SECURED: true
       }
     ];
+*/
+    this.settingsService.scanNetworks().subscribe(x=>{
+      this.networks = x.networks;
+    });
   }
 
   setCurrentData() {
     let net = this.config;
     this.current = {
-      "SSID": "Controller",
+      "SSID": "Irrigation Controller",
       "RSSI": this.dbTolevel(net.RSSI),
       "IP": net.ip,
       "SECURED": net.wifi_enabled && net.wifi_password.length > 0 || !net.wifi_enabled && net.ap_password.length > 0,

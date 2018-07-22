@@ -12,7 +12,8 @@
 class APIScheduler {
     public:
         static void Programs_Get(WiFiClient&);
-        static void Program_Get(String & id, WiFiClient&);
+        static void Program_Get(String &, WiFiClient&);
+        static void Program_Set(String &, WiFiClient &, String&);
     protected: 
 
 

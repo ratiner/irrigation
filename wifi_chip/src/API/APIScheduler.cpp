@@ -19,3 +19,12 @@ void APIScheduler::Program_Get(String & id, WiFiClient &client)
         client.write(prog);
     prog.close();
 }
+
+void APIScheduler::Program_Set(String & id, WiFiClient &client, String& body)
+{
+    Settings.setProgram(id, body);
+     StaticJsonBuffer<100> jsonBuffer;
+    JsonObject &root = jsonBuffer.createObject();
+    root["Status"] = "OK";
+    root.printTo(client);
+}
