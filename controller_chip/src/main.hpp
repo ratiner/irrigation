@@ -1,6 +1,7 @@
 
 #include <Arduino.h>
 #include <Wire.h>
+#include <ArduinoJson.h>
 #include "com.hpp"
 #include "clock.hpp"
 #include "scheduler.hpp"
@@ -13,4 +14,6 @@ void initIO();
 
 void loop();
 
+void startValve(int);
+void stopValve(int);
 void waterPulse();

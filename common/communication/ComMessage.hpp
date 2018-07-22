@@ -9,7 +9,7 @@ class ComMessage {
     String _value;
     public:
         ComMessage (void);
-        ComMessage (int cmd, int key, String value);
+        ComMessage (int cmd, int key, const char *);
         void setCommand(int cmd);
         void setKey(int key);
         void setValue(String value);

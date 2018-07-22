@@ -37,11 +37,37 @@ void ComClass::onReceived(ComMessage * req)
         }
         case ComClass::CMD_WRITE:
         {
+            /*
+            if(req->getKey() == KEY_START_PROG)
+            {
+                String index = req->getValue();
+                File prog = Settings.getProgram(index);
+                StaticJsonBuffer<512> jsonBuffer;
+                JsonObject &root = jsonBuffer.parseObject(prog);
+                root["active"] = 1;
+                String newProg;
+                root.printTo(newProg);
+                prog.close();
+                Settings.setProgram(index, newProg);
+            }
+            else if(req->getKey() == KEY_STOP_PROG)
+            {
+                String index = req->getValue();
+                File prog = Settings.getProgram(index);
+                StaticJsonBuffer<512> jsonBuffer;
+                JsonObject &root = jsonBuffer.parseObject(prog);
+                root["active"] = 0;
+                String newProg;
+                root.printTo(newProg);
+                prog.close();
+                Settings.setProgram(index, newProg);
+            }
+          */
             transmit(req->getCommand(), req->getKey(), "OK");
             break;
         }
     }
-    delete req;
+   // delete req;
 }
 
 ComClass COM;

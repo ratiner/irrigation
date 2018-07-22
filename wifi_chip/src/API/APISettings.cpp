@@ -58,7 +58,7 @@ void APISettings::Network_GetClock(WiFiClient &client)
     JsonObject &root = jsonBuffer.createObject();
     root["stamp"] = result->getValue();
     root.printTo(client);
-    delete result;
+    //delete result;
 }
 
 void APISettings::Network_SetClock(WiFiClient& client, String& body)
@@ -68,7 +68,7 @@ void APISettings::Network_SetClock(WiFiClient& client, String& body)
     JsonObject &root = jsonBuffer.createObject();
     root["status"] = result->getValue();
     root.printTo(client);
-    delete result;
+   // delete result;
 }
 
 

@@ -1,32 +1,51 @@
 #include "main.hpp"
 
  int n;
-void setup() {
 
+ int counterFactor;
+
+void setup() {
     COM.begin();
     Wire.begin();
  
-
-n=0;
-
+    n=0;
     pinMode(13,OUTPUT);
-    pinMode(8, OUTPUT);
-    pinMode(9, OUTPUT);
-    pinMode(2, INPUT_PULLUP);
-
-    attachInterrupt(digitalPinToInterrupt(2), waterPulse, FALLING);
     digitalWrite(13,LOW);
-    digitalWrite(8, HIGH);
-    digitalWrite(9, HIGH);
-    //started = 0;
-
+  
     initIO();
     Scheduler.init();
 }
 
 void initIO () {
     ComMessage * io = COM.send(ComClass::CMD_READ, ComClass::KEY_IO, NULL);
-    delete io;
+
+    StaticJsonBuffer<512> jsonBuffer;
+    JsonObject &root = jsonBuffer.parseObject(io->getValue());
+
+    counterFactor = root["counter"]["factor"];
+    JsonArray &counterPorts = root["counter"]["ports"];
+
+    if(counterPorts.size() == 1)
+    {
+        int port = counterPorts.get<int>(0);
+        pinMode(port, INPUT_PULLUP);
+        attachInterrupt(digitalPinToInterrupt(port), waterPulse, FALLING);
+    }
+
+
+    JsonArray &valves = root["valves"];
+    for(int i =0; i< valves.size(); i++)
+    {
+        JsonObject & v = valves.get<JsonObject>(i);
+        //id
+        JsonArray & v_ports = v["ports"];
+        for(int j=0; j<v_ports.size(); j++) 
+        {
+            pinMode(v_ports.get<int>(j), OUTPUT);
+        }
+    }
+    
+    stopValve(1);
 }
 
 
@@ -35,54 +54,84 @@ void initIO () {
 void loop() {
 
     COM.listen();
+    TimeStamp * t = CLOCK.getTime();
 
     LinkedList<Program*> * progs = Scheduler.getPrograms();
-    
-    Serial.print("\nProgs ");
-    Serial.println(progs->size());
 
     Program * p;
+
     for(int i=0; i< progs->size(); i++) 
     {
         p = progs->get(i);
-        Serial.println(p->name);
+        
+        if(!p->active) 
+        {
+            if(t->compareTo(p->startTime) == 0 && p->weekDays & (1 << t->doW-1))
+            {
+                p->active = 1;
+                p->amountLeft = p->amount;
+                String progId = "" + i;
+               // ComMessage * res = COM.send(ComClass::CMD_WRITE, ComClass::KEY_START_PROG, "0");
+               // delete res;
+                
+                startValve(1);
+            }
+        }
+        else
+        {
+            if(t->compareTo(p->endTime) <=0 || p->amountLeft <= 0)
+            {
+                p->active = false;
+                String progId = "" + i;
+                //ComMessage * res = COM.send(ComClass::CMD_WRITE, ComClass::KEY_STOP_PROG, "0");
+               // delete res;
+                stopValve(1);
+            }
+            else 
+            {
+              //  String amount = "" + p->amountLeft;
+               // ComMessage * res = COM.send(ComClass::CMD_SET_AMOUNT, i, amount.c_str());
+               // delete res;
+            }
+        }
     }
-    delay(5000);
-/*
+}
 
-     TimeStamp * t = CLOCK.getTime();
+void startValve(int id)
+{
+    //turn on led
+    digitalWrite(13,HIGH);
+    digitalWrite(8, HIGH);
+    digitalWrite(9, LOW);
+    delay(100);
+    digitalWrite(8, LOW);
+    digitalWrite(9, LOW);
 
-    if(started == 0 && t->compareTo(startTime) <=0) {
-        //turn on led
-      //  digitalWrite(13,HIGH);
-        digitalWrite(8, HIGH);
-        digitalWrite(9, LOW);
-        delay(10);
-        digitalWrite(8, HIGH);
-        digitalWrite(9, HIGH);
-        started = 1;
-    }
-
-   
-
-   
-
-    if(started == 1 && t->compareTo(endTime) <= 0) {
-        //turn off led
-        //digitalWrite(13,LOW);
-        digitalWrite(8, LOW);
-        digitalWrite(9, HIGH);
-        delay(10);
-        digitalWrite(8, HIGH);
-        digitalWrite(9, HIGH);
-        started =2 ;
-    }
-    //TODO: Kiril Stuff :)
-    */
+}
+void stopValve(int)
+{
+    //turn off led
+    digitalWrite(13,LOW);
+    digitalWrite(8, LOW);
+    digitalWrite(9, HIGH);
+    delay(100);
+    digitalWrite(8, LOW);
+    digitalWrite(9, LOW);
 }
 
 void waterPulse() {
     n++;
- 
- //digitalWrite(13,HIGH);
+
+    LinkedList<Program*> * progs = Scheduler.getPrograms();
+    Serial.println("interrupt");
+    Program * p;
+    for(int i=0; i< progs->size(); i++) 
+    {
+        p = progs->get(i);
+        if(p->active)
+        {
+           p->amountLeft -= counterFactor;
+        }
+            
+    }
 }

@@ -29,9 +29,9 @@ class SettingsClass {
         File & getIOSettings();
         void setIOSettings(String& settings);
         byte getPrograms();
+        File & getProgram(String &, uint8_t);
         File & getProgram(String &);
-        File & getProgram(byte, uint8_t);
-        void setProgram(byte id, String& settings);
+        void setProgram(String &, String& settings);
 
 };
 

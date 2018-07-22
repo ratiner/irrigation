@@ -5,6 +5,9 @@
 #include <icom.hpp>
 #include "clock.hpp"
 #include <TimeStamp.hpp>
+#include "scheduler.hpp"
+#include <SchedulerStructures.hpp>
+#include <LinkedList.hpp>
 
 class ComClass : public ICom {
     private:

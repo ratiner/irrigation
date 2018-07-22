@@ -63,12 +63,24 @@ void WebRequest::_doApiRequest(WiFiClient& client)
       
         else if (url.indexOf("1/on") > 0)
         {
-
+            COM.send(ComClass::CMD_MANUAL, ComClass::KEY_OPEN, "1");
         }
 
         else if (url.indexOf("1/off") > 0)
         {
-            //  COM.send(1, 1, "0");
+            COM.send(ComClass::CMD_MANUAL, ComClass::KEY_CLOSE, "1");
+        }
+
+        else if (url.indexOf("status") > 0) 
+        {
+            ComMessage * msg = COM.send(ComClass::CMD_READ, ComClass::KEY_STATUS, NULL);
+            
+            
+            StaticJsonBuffer<100> jsonBuffer;
+            JsonObject &root = jsonBuffer.createObject();
+
+            root["active"] =  msg->getValue();
+            root.printTo(client);            
         }
 
         else 

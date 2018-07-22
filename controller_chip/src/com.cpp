@@ -12,6 +12,13 @@ void ComClass::onReceived(ComMessage * req)
                 const char * strTime = now->getStr();
                 transmit(req->getCommand(), req->getKey(), strTime);
             }
+            else if(req->getKey() == ComClass::KEY_STATUS)
+            {
+                LinkedList<Program*> * progs = Scheduler.getPrograms();
+                Program * p = progs->get(0);
+                String str = String(p->active);
+                transmit(req->getCommand(), req->getKey(), str.c_str());
+            }
             break;
         }
         case ComClass::CMD_WRITE:
@@ -19,22 +26,48 @@ void ComClass::onReceived(ComMessage * req)
             if(req->getKey() == ComClass::KEY_CLOCK)
             {
                 TimeStamp newTime;
-                newTime.year =  req->getValue().substring(0, 4).toInt()-2000;
-                newTime.month =  req->getValue().substring(5, 7).toInt();
-                newTime.day =  req->getValue().substring(8, 10).toInt();
-                newTime.hour = req->getValue().substring(11, 13).toInt();
-                newTime.min = req->getValue().substring(14, 16).toInt();
-                newTime.sec = req->getValue().substring(17, 19).toInt();
-                newTime.doW = req->getValue().substring(20,21).toInt()+1;
+                newTime.fromStr(req->getValue().c_str());
                 CLOCK.setTime(newTime);
                 transmit(req->getCommand(), req->getKey(), "OK");
             }
 
             break;
         }
+        case ComClass::CMD_MANUAL:
+        {
+           // LinkedList<Program*> * progs = Scheduler.getPrograms();
+           // Program * p = progs->get(0);
+
+            if(req->getKey() == ComClass::KEY_OPEN)
+            {
+                digitalWrite(13,HIGH);
+                digitalWrite(8, HIGH);
+                digitalWrite(9, LOW);
+                delay(100);
+                digitalWrite(8, LOW);
+                digitalWrite(9, LOW);
+               
+                //p->active = 1;
+                //String str = String(p->active);
+
+            }
+            else if(req->getKey() == ComClass::KEY_CLOSE)
+            {
+                digitalWrite(13,LOW);
+                digitalWrite(8, LOW);
+                digitalWrite(9, HIGH);
+                delay(100);
+                digitalWrite(8, LOW);
+                digitalWrite(9, LOW);
+                //p->active = 0;
+            }
+
+            transmit(req->getCommand(), req->getKey(), "OK");
+            break;
+
+        }
     }
 
-    delete req;
 }
 
 ComClass COM;

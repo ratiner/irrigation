@@ -29,6 +29,8 @@ struct Program {
     int amount;
     Valve * valves;
     byte totalVales;
+    int amountLeft;
+    int active;
 };
 
 #endif

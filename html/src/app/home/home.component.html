@@ -1,5 +1,9 @@
 <p>
-  Current Status: Idle <br>
-  Valve 1 Status: off <br>
+  Current Status: {{active ? "Irrigating" : "Idle"}} <br>
+  Valve 1 Status: {{valve ? "On" : "Off"}} <br>
   Water Counter: 0
+</p>
+<p>
+  <button class="btn btn-warning" (click)="forceStart()">Force Start</button> &nbsp;&nbsp;&nbsp;&nbsp;
+  <button class="btn btn-danger" (click)="forceStop()">Force Stop</button>
 </p>

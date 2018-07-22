@@ -5,29 +5,58 @@ void ICom::begin(void)
     Serial.begin(9600);
 
     _buffer = "";
+    _response = new ComMessage();
 }
 
 void ICom::listen()
 {
     if (Serial.available())
     {
-        ComMessage *msg = receive();
-        if (!msg)
+        receive();
+        if (_response->getCommand() == -9)
             return;
-        onReceived(msg);
+        onReceived(_response);
     }
 }
 
-ComMessage *ICom::send(int cmd, int key, const char *value)
+ComMessage * ICom::send(int cmd, int key, const char *value)
 {
-    transmit(cmd, key, value);
-    return receive();
+    int retry = 1;
+    while(retry < 5) 
+    {
+        transmit(cmd, key, value);
+        receive();
+        if(_response->getValue() == NULL || _response->getValue() == "")
+        {
+            retry++;
+            delay(1000);
+        }
+        else {
+            retry = 99;
+            break;
+        }
+    }
+    return _response;
 }
 
-ComMessage *ICom::send(int cmd, int key, File &value)
+ComMessage * ICom::send(int cmd, int key, File &value)
 {
-    transmit(cmd, key, value);
-    return receive();
+    int retry = 1;
+    while(retry < 5) 
+    {
+        transmit(cmd, key, value);
+        receive();
+        if(_response->getValue() == NULL || _response->getValue() == "")
+        {
+            retry++;
+            delay(1000);
+        }
+        else {
+            retry = 99;
+            break;
+        }
+    }
+    return _response;
 }
 
 ///PRIVATE FUNCTIONS
@@ -67,7 +96,7 @@ void ICom::transmit(int cmd, int key, File &value)
     
     while (value.available())
     {
-        if (i++ > 20)
+        if (i++ > 10)
         {
             delay(100);
             i = 0;
@@ -100,8 +129,17 @@ void ICom::transmit(int cmd, int key, File &value)
     */
 }
 
-ComMessage *ICom::receive()
+void ICom::receive()
 {
+    _response->setValue("");
+    _response->setCommand(-9);
+    _response->setKey(-9);
+
+    String cmd;
+    String key;
+    String value;
+
+    int timer = 0;
     while (true)
     {
         while (Serial.available())
@@ -115,8 +153,6 @@ ComMessage *ICom::receive()
 
         if (idxEnd > -1)
         {
-            String cmd, key, value;
-
             _buffer = _buffer.substring(idxStart + _start.length());
             idxSplit = _buffer.indexOf(_split);
             cmd = _buffer.substring(0, idxSplit);
@@ -130,14 +166,14 @@ ComMessage *ICom::receive()
 
             //  Debug::println("before call");
             //   _receivedCallback(cmd.toInt(), key.toInt(), value.c_str());
-
-            return new ComMessage(cmd.toInt(), key.toInt(), value);
+            _response->setCommand(cmd.toInt());
+            _response->setKey(key.toInt());
+            _response->setValue(value);
+            return;
         }
 
-        int timer = 0;
-    
         if (timer >= _timeout)
-            return NULL;
+            return;
         delay(200);
         timer += 200;
     }

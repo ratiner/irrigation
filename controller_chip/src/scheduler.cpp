@@ -2,35 +2,57 @@
 
 void SchedulerClass::init()
 {
+    int i, j;
+    ComMessage * result;
+    StaticJsonBuffer<512> jsonBuffer;
+
     programs = LinkedList<Program*>();
 
-    ComMessage *progs = COM.send(ComClass::CMD_READ, ComClass::KEY_PROGRAM, NULL);
-    byte total = progs->getValue().toInt();
-    delete progs;
- 
+    result = COM.send(ComClass::CMD_READ, ComClass::KEY_PROGRAM, NULL);
+    byte total = result->getValue().toInt();
 
     Program * p;
-    for (int i = 0; i < total; i++)
+    for (i = 0; i < total; i++)
     {
         String idx = String(i);
-        ComMessage *prog = COM.send(ComClass::CMD_READ, ComClass::KEY_PROGRAM, idx.c_str());
+        result = COM.send(ComClass::CMD_READ, ComClass::KEY_PROGRAM, idx.c_str());
         
-        StaticJsonBuffer<512> jsonBuffer;
-        JsonObject &root = jsonBuffer.parseObject(prog->getValue());
+        JsonObject &root = jsonBuffer.parseObject(result->getValue());
+        String * name;
+        String dt;
+
         if (root.success())
         {
+            name = new String();
+            *name = (const char *)root["name"]; 
             p = new Program();
-            p->name = root["name"]; 
-            //p.startTime = startTime
-            //p.endTime = endTime
-            p->weekDays = 0x00000101;
-            p->amount = 50;
+            p->active = root["active"];
+            p->name =name->c_str();
+            dt = "0000-00-00T";
+            dt += (const char *)root["startTime"];
+            p->startTime.fromStr(dt.c_str());
+
+            dt = "0000-00-00T";
+            dt += (const char *)root["endTime"];
+            p->endTime.fromStr(dt.c_str());
+
+            JsonArray &days = root["weekDays"];
+
+            p->weekDays = 0;
+            for(j=0; j<= days.size(); j++) {
+                p->weekDays |= 1 << days.get<int>(j);
+            }
+            
+            p->amount = 10;//root["amount"];
+            p->amountLeft =0;
             //p.valves =
             programs.add(p);
         }
 
-        delete prog;
     }
+
+  Serial.print("Loaded: ");
+  Serial.println(programs.size());
 }
 
 LinkedList<Program *> * SchedulerClass::getPrograms() 

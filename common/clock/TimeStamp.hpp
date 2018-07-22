@@ -19,6 +19,7 @@ class TimeStamp {
 
         int compareTo(TimeStamp& otherTime);
         const char * getStr();
+        void fromStr(const char *);
 
 };
 #endif

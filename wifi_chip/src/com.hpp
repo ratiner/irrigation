@@ -5,6 +5,7 @@
 #include <icom.hpp>
 #include "debug.hpp"
 #include "settings.hpp"
+#include <ArduinoJson.h>
 
 class ComClass : public ICom {
     private:

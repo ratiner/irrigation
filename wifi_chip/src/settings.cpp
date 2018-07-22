@@ -78,39 +78,24 @@ byte SettingsClass::getPrograms()
 
 File &SettingsClass::getProgram(String &index)
 {
-    if(isDigit(index.charAt(0)))
-        return this->getProgram(index.toInt(), O_READ);
-    else
-        return this->getProgram(-1, O_READ);
+    return this->getProgram(index, FILE_READ);
 }
 
-File &SettingsClass::getProgram(byte index, uint8_t mode)
+File &SettingsClass::getProgram(String &index, uint8_t mode)
 {
-    File entry;
-    if (index > -1)
-    {
-        byte c = 0;
-        String path = programSettingsFolder;
-        File dir = SD.open(programSettingsFolder);
-        if (!dir)
-            Debug::println("Failed to open");
-
-        entry = dir.openNextFile(mode);
-        while (entry && c < index)
-        {
-            entry.close();
-            entry = dir.openNextFile(mode);
-            c++;
-        }
-    }
+    String path = programSettingsFolder;
+    path += index + ".cfg";
+    File entry= SD.open(path);
     if (!entry)
         Debug::println("Failed to open");
     return entry;
+
+
 }
 
-void SettingsClass::setProgram(byte id, String &program)
+void SettingsClass::setProgram(String &index, String &program)
 {
-    File file = this->getProgram(id, O_WRITE | O_CREAT | O_TRUNC);
+    File file = this->getProgram(index, O_WRITE | O_CREAT | O_TRUNC);
     if (!file)
         Debug::println("Failed to open");
     file.print(program);

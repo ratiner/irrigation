@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SchedulerService } from '../scheduler.service';
 
 @Component({
   selector: 'app-program-edit',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProgramEditComponent implements OnInit {
 
-  constructor() { }
+  prog: any;
+  constructor(
+    private schService: SchedulerService
+  ) { }
 
   ngOnInit() {
+    this.schService.getProgram("0").subscribe(prog => {
+      this.prog = prog;
+    });
+  }
+
+  save() {
+    
   }
 
 }

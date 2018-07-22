@@ -5,11 +5,11 @@ ComMessage::ComMessage (void)
 {
 }
 
-ComMessage::ComMessage (int cmd, int key, String value)
+ComMessage::ComMessage (int cmd, int key, const  char * value)
 {
     _cmd = cmd;
     _key = key;
-    _value = value;
+    _value = String(value);
 }
 
 void ComMessage::setCommand (int cmd)
